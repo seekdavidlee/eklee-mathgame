@@ -1,0 +1,17 @@
+.upper {
+    padding-top: 20px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.answer {
+    color: green;
+}
+
+.is-my-large {
+    font-size: 3.5rem;
+}
+
+.is-extra-large {
+    font-size: 6rem;
+}
