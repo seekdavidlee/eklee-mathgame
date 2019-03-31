@@ -1,9 +1,10 @@
 <div class="container upper">
   <div class="columns">
     <div class="column">
-      <article class="message is-info">
+      <article class="message is-info disable-padding-on-iphone">
         <div class="message-header">
           Score
+          <span>({{score}}/{{maxQuestions}})</span>
         </div>
         <div class="message-body">
           <div class="select">
@@ -13,10 +14,9 @@
               <option value="hard">Hard</option>
             </select>
           </div>
-          <p class="is-size-1">{{score}}/{{maxQuestions}}</p>
         </div>
       </article>
-      <div class="tile is-ancestor">
+      <div class="tile is-ancestor hide-on-iphone">
         <div class="tile is-parent is-vertical">
           <ng-container *ngFor="let qns of questions">
             <span *ngIf="qns.theAnswer !== null" class="tag is-size-5"

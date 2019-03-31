@@ -15,3 +15,24 @@
 .is-extra-large {
     font-size: 6rem;
 }
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .upper {
+        padding-top: 2px;
+    }
+    .is-my-large {
+        font-size: 1.5rem;
+    }
+    .is-extra-large {
+        font-size: 3rem;
+    }
+    .hide-on-iphone {
+        display: none;
+    }
+    .disable-padding-on-iphone {
+        margin-bottom: 0;
+    }
+    .smaller-on-iphone {
+        font-size: 1.5rem;
+    }
+}
