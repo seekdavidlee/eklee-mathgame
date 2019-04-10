@@ -1,6 +1,9 @@
 <div class="container upper">
   <div class="columns">
     <div class="column">
+      <div class="bottom-padding">
+        <button class="button is-success is-fullwidth" (click)="newGame()">New Game</button>
+      </div>
       <article class="message is-info disable-padding-on-iphone">
         <div class="message-header">
           Score
@@ -35,8 +38,8 @@
                 Question {{questions.length}} of {{maxQuestions}}
               </h1>
               <h2 class="subtitle">
-                <p class="is-extra-large">{{questions[questions.length-1].number1}} +
-                  {{questions[questions.length-1].number2}} = <span class="answer">{{answer}}</span> </p>
+                <p class="is-extra-large">{{questions[questions.length-1].getQuestion()}} = <span
+                    class="answer">{{answer}}</span> </p>
               </h2>
             </div>
           </div>
@@ -67,17 +70,24 @@
 </div>
 <div class="modal" [ngClass]="{'is-active':showResult}">
   <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="box">
-      <div class="columns">
-        <div class="column">
-          <p class="modal-card-title">You got {{score}}/{{maxQuestions}}!</p>
-        </div>
-        <div class="column">
-          <button class="button" (click)="closeResult()">OK</button>
-        </div>
-      </div>
-    </div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">You got {{score}}/{{maxQuestions}}!</p>
+    </header>
+    <footer class="modal-card-foot">
+      <button class="button is-success" (click)="closeResult()">Next Game!</button>
+    </footer>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="closeResult()"></button>
+</div>
+<div class="modal" [ngClass]="{'is-active':showGamesDialog}">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Hey, choose a Math Game.</p>
+    </header>
+    <footer class="modal-card-foot">
+      <button class="button is-success" (click)="selectGame('addition')">Addition + </button>
+      <button class="button is-success" (click)="selectGame('subtraction')">Subtraction - </button>
+    </footer>
+  </div>
 </div>

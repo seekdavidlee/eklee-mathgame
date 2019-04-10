@@ -1,13 +1,25 @@
 import { Difficulty } from './difficulty.enum';
+import { GameType } from './gameType.enum';
 
 export class Question {
 
-    constructor(difficulty: Difficulty) {
+    _gameType: GameType;
+    _difficulty: Difficulty;
+
+    constructor(difficulty: Difficulty, gameType: GameType) {
+
+        this._gameType = gameType;
+        this._difficulty = difficulty;
+
+        this.init();
+    }
+
+    init(): void {
 
         let min: number;
         let max: number;
 
-        switch (difficulty) {
+        switch (this._difficulty) {
             case Difficulty.Easy:
                 min = 1;
                 max = 9
@@ -26,6 +38,14 @@ export class Question {
 
         this.number1 = this.randomIntFromInterval(min, max);
         this.number2 = this.randomIntFromInterval(min, max);
+
+        if (this._gameType == GameType.Subtraction) {
+            if (this.number1 < this.number2) {
+                let temp = this.number1;
+                this.number1 = this.number2;
+                this.number2 = temp;
+            }
+        }
     }
 
     number1: number;
@@ -41,6 +61,24 @@ export class Question {
     }
 
     correct(): boolean {
+        if (this._gameType == GameType.Subtraction) {
+            return this.theAnswer === (this.number1 - this.number2);
+        }
         return this.theAnswer === (this.number1 + this.number2);
+    }
+
+    getQuestion(): string {
+
+        let compare: string;
+
+        if (this._gameType == GameType.Addition) {
+            compare = "+";
+        }
+
+        if (this._gameType == GameType.Subtraction) {
+            compare = "-";
+        }
+
+        return this.number1 + " " + compare + " " + this.number2;
     }
 }

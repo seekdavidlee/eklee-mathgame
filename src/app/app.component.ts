@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from './question';
 import { Difficulty } from './difficulty.enum';
+import { GameType } from "./gameType.enum";
 
 @Component({
   selector: 'app-root',
@@ -21,10 +22,8 @@ export class AppComponent implements OnInit {
   maxQuestions: number = 10;
   showResult: boolean = false;
   difficulty: Difficulty = Difficulty.Easy;
-
-  constructor() {
-    this.questions.push(new Question(this.difficulty));
-  }
+  showGamesDialog: boolean = true;
+  gameType: GameType;
 
   click(number: number): void {
     this.answer += number.toString();
@@ -51,7 +50,19 @@ export class AppComponent implements OnInit {
     if (this.questions.length === this.maxQuestions) {
       this.showResult = true;
     } else {
-      this.questions.push(new Question(this.difficulty));
+
+      let nextQuestion: Question = null;
+
+      while (nextQuestion === null) {
+        nextQuestion = new Question(this.difficulty, this.gameType);
+        let isAsked = nextQuestion.getQuestion();
+        let found = this.questions.filter(f => f.getQuestion() === isAsked);
+        if (found.length > 0) {
+          nextQuestion = null;
+        }
+      }
+
+      this.questions.push(nextQuestion);
     }
   }
 
@@ -59,7 +70,7 @@ export class AppComponent implements OnInit {
     this.showResult = false;
     this.score = 0;
     this.questions.length = 0;
-    this.questions.push(new Question(this.difficulty));
+    this.questions.push(new Question(this.difficulty, this.gameType));
   }
 
   private _fullScreenMethod: any;
@@ -84,7 +95,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  setDifficulty(value: any): void {
+  setDifficulty(value: string): void {
     switch (value) {
       case "normal":
         this.difficulty = Difficulty.Normal;
@@ -99,5 +110,25 @@ export class AppComponent implements OnInit {
         break;
     }
     this.closeResult();
+  }
+
+  selectGame(gameType: string): void {
+
+    switch (gameType) {
+      case "addition":
+        this.gameType = GameType.Addition;
+        break;
+
+      case "subtraction":
+        this.gameType = GameType.Subtraction;
+        break;
+    }
+    this.showGamesDialog = false;
+    this.questions.push(new Question(this.difficulty, this.gameType));
+  }
+
+  newGame(): void {
+    this.closeResult();
+    this.showGamesDialog = true;
   }
 }
