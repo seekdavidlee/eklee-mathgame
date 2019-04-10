@@ -60,11 +60,8 @@ export class AppComponent implements OnInit {
         let found = this.questions.filter(f => f.theQuestion === isAsked);
         if (found.length > 0) {
           nextQuestion = null;
-          console.log("Try again");
         }
       }
-
-      if (nextQuestion === null) throw "ERR!!";
 
       this.questions.push(nextQuestion);
     }
