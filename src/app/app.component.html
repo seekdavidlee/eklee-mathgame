@@ -23,7 +23,7 @@
         <div class="tile is-parent is-vertical">
           <ng-container *ngFor="let qns of questions">
             <span *ngIf="qns.theAnswer !== null" class="tag is-size-5"
-              [ngClass]="{'is-success':qns.correct(),'is-danger':!qns.correct()}">{{qns.number1}} + {{qns.number2}} =
+              [ngClass]="{'is-success':qns.correct(),'is-danger':!qns.correct()}">{{qns.theQuestion}} =
               {{qns.theAnswer}}</span>
           </ng-container>
         </div>
@@ -33,13 +33,16 @@
       <div class="row">
         <section class="hero is-small is-primary is-bold">
           <div class="hero-body">
-            <div class="container">
+            <div class="container" *ngIf="questions.length === 0">
+              <h1 class="title">Math is fun!</h1>
+            </div>
+            <div class="container" *ngIf="questions.length > 0">
               <h1 class="title">
                 Question {{questions.length}} of {{maxQuestions}}
               </h1>
               <h2 class="subtitle">
-                <p class="is-extra-large">{{questions[questions.length-1].getQuestion()}} = <span
-                    class="answer">{{answer}}</span> </p>
+                <p class="is-extra-large">{{questions[questions.length-1].theQuestion}} =
+                  <span class="answer">{{answer}}</span> </p>
               </h2>
             </div>
           </div>

@@ -3,8 +3,8 @@ import { GameType } from './gameType.enum';
 
 export class Question {
 
-    _gameType: GameType;
-    _difficulty: Difficulty;
+    private _gameType: GameType;
+    private _difficulty: Difficulty;
 
     constructor(difficulty: Difficulty, gameType: GameType) {
 
@@ -46,11 +46,14 @@ export class Question {
                 this.number2 = temp;
             }
         }
+
+        this.theQuestion = this.getQuestion();
     }
 
     number1: number;
     number2: number;
     theAnswer: number = null;
+    theQuestion: string;
 
     randomIntFromInterval(min: number, max: number): number {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -67,7 +70,7 @@ export class Question {
         return this.theAnswer === (this.number1 + this.number2);
     }
 
-    getQuestion(): string {
+    private getQuestion(): string {
 
         let compare: string;
 

@@ -47,6 +47,7 @@ export class AppComponent implements OnInit {
       this.score += 1;
     }
 
+    console.log("Qns=" + this.questions.length + ",max=" + this.maxQuestions);
     if (this.questions.length === this.maxQuestions) {
       this.showResult = true;
     } else {
@@ -55,12 +56,15 @@ export class AppComponent implements OnInit {
 
       while (nextQuestion === null) {
         nextQuestion = new Question(this.difficulty, this.gameType);
-        let isAsked = nextQuestion.getQuestion();
-        let found = this.questions.filter(f => f.getQuestion() === isAsked);
+        let isAsked = nextQuestion.theQuestion;
+        let found = this.questions.filter(f => f.theQuestion === isAsked);
         if (found.length > 0) {
           nextQuestion = null;
+          console.log("Try again");
         }
       }
+
+      if (nextQuestion === null) throw "ERR!!";
 
       this.questions.push(nextQuestion);
     }
@@ -128,7 +132,8 @@ export class AppComponent implements OnInit {
   }
 
   newGame(): void {
-    this.closeResult();
+    this.score = 0;
+    this.questions.length = 0;
     this.showGamesDialog = true;
   }
 }
